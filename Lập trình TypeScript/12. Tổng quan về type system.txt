@@ -1,0 +1,16 @@
+1. Các kiểu dữ liệu đã biết bên JS:
++ Primitive: number, boolean, string, null, undefined, symbol
++ Reference: array, object, function
+
+- Bên TS cũng có các kiểu dữ liệu như JS nhưng cũng sẽ bắt gặp các kiểu như: any, unknown, void, never,...
+
+2. any: bất cứ kiểu dữ liệu gì, bỏ qua typeChecking (không khuyến khích dùng trong TS)
+
+3. Literal types: const count = 1; // const count: 1;
+
+4. Cách không thể thay đổi giá trị bên trong object/array
+const Student = {
+  name: 'student'
+} as const;
+
+const Students = [] as const;

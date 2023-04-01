@@ -1,0 +1,31 @@
+1. Static file
+VD1: #ROOT/src/index.js
+app.use(express.static(path.join(__dirname, 'assets'))); // #ROOT/src/assets
+VD2: #ROOT/src/index.js
+app.use(express.static(path.join(__dirname, 'resources/assets/'))); // #ROOT/src/resources/assets
+
+**SASS COMPILER**
+2. Cài đặt sass: npm i sass (file scss chỉ dùng trong quá trình dev, build lên website ta dùng css vì trình duyệt không đọc được file css)
+
++ Thêm script: "compilerSass": "sass --no-source-map -w $FOLDER_NAME_SCSS:$FOLDER_NAME_CSS"
+
+VD: "sass --no-source-map -w src/resources/assets/scss:src/public/css/"
+**
+
+
+**NODE-SASS COMPILER**
+2. Cài đặt node-sass: npm i node-sass (file scss chỉ dùng trong quá trình dev, build lên website ta dùng css vì trình duyệt không đọc được file css)
+
++ Thêm script: "compilerScss": "node-sass [options] $PATH_FOLDER_SCSS $PATH_FOLDER_OUTPUT_CSS"
+[options]: -w (lắng nghe sự thay đổi)
+	     -o (Output directory)
+
+VD: node-sass -w src/resources/scss/ -o src/public/css/
+**
+
+3. Đặt variables cho scss: _variables.scss
+$color-primary: blue;
+*USEAGE: @import 'variables';
+h1{
+  color: $color-primary;
+}

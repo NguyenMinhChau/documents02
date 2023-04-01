@@ -1,0 +1,66 @@
+NÊN DÙNG INTERFACE HƠN LÀ TYPE ALIAS
+
+1. Type Alias: Đặt một tên mới cho một kiểu dữ liệu
+type StudentName = string;
+type StudentAge = number;
+
+2. Interface: Đặt tên cho một object type
+type Student = {
+  readonly id: number; //không thể update được
+  name: string;
+  age?: number; // có hoặc không có age vẫn được
+}
+
+const student : Student = {
+  id: 1,
+  name: 'Bob'
+}
+
+3. Union Type: Dùng dấu |, Kết hợp 2 hoặc nhiều kiểu dữ liệu khác nhau
+type Status = 'active' | 'inactive';
+type ProductStatus = 0 | 1 | 2 | 3;
+type StudentId = number | string;
+
+interface Student {
+  id: number | string;
+  name: string;
+  gender: 'male' | 'female';
+  grade: 'A' | 'B' | 'C' | 'D' | 'E';
+}
+
+4. Intersection type: Dùng dấu &, gom lại và các thuộc tính trong các interface
+interface BusinessPartner {
+  name: string;
+  credit: number;
+}
+interface Identity {
+  id: number;
+  name: string;
+}
+interface Contact {
+  email: string;
+  phone: string;
+}
+
+type Employee = Identity & Contact;
+HOẶC
+interface Employee extends Identity, Contact {}
+
+==> Employee {id: number; name: string; email: string; phone: string};
+
+5. Thêm trường dữ liệu mới vào interface bằng MERGING (KHÔNG LÀM ĐƯỢC VỚI TYPE ALIAS)
+interface Student {
+  id: number;
+  name: string;
+}
+
+interface Student {
+  age?: number;
+}
+
+==> Student {id: number; name: string; age?: number;};
+
+6. Cách đặt tên interface: PascalCase (Student, Product)
+
+
+

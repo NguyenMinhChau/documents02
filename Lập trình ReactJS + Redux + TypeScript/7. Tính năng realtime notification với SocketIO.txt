@@ -1,0 +1,3 @@
+THAM KHẢO: https://github.com/teduinternational/tedu_social
+
+1. npm i socket.io @types/socket.io

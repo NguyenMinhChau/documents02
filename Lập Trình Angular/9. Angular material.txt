@@ -1,0 +1,9 @@
+1. https://material.angular.io/
+
+2. Cài đặt thư viện root project và import component tại app.modules.ts => Chạy lại dự án
+
+3. Sử dụng component (CSS trong styles.css sẽ ghi đè hết tất cả CSS angular material) => xóa hết css trong styles.css, giữ lại các thuộc tính reset css
+
+4. Ghi đè CSS angular material bằng cách tạo styles/$name.css và khai báo vào angular.json
+
+5. Chạy lại dự án

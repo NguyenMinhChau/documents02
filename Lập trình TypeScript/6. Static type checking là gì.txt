@@ -1,0 +1,23 @@
+1. Static type checking
+- Giúp phát hiện ra lỗi ngay trong lúc code
+- Giúp tránh lỗi typo (phổ biến bên javascript, chạy lên rồi mới thấy lỗi)
+- Tiết kiệm thời gian debug
+
+2. Types for tooling
+- Ngoài việc thông báo lỗi trong lúc code
+- Giúp mình nhắc code hạn chế lỗi bằng việc hỗ trợ completions/suggestions
+
+3. tsc - typescript compiler
+- npx tsc: compiler tất cả file ts => js trong project
+- npx tsc $NAME.ts: compiler $NAME.ts
+- npx tsc src/*.ts: compiler tất cả file .ts trong src
+
+4. Để tạo folder chứa tất cả các file compiler ts => js: tsconfig.json
+"outDir" : "./$NAME_FOLDER"
+
+5. Emmit with error: tsconfig.json
+"noEmitOnError": false,
+- true: KHÔNG tạo ra file js nếu compiler LỖI
+- false: VẪN tạo ra file js dù compiler CÓ LỐI
+
+

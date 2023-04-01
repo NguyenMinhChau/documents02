@@ -1,0 +1,70 @@
+const USER_KEY_STORE: string = 'RTS_user';
+
+// LOGIN WITH FETCH API
+const handleResponse = (response: any) => {
+  return response.text().then((text: any) => {
+    const data = text && JSON.parse(text);
+    if (!response.ok) {
+      if (response.status === 401) {
+        // auto logout if 401 response returned from api
+        logoutSV();
+      }
+      const error = (data && data.message) || response.statusText;
+      return Promise.reject(error);
+    }
+    return data;
+  });
+};
+const logoutSV = () => {
+  sessionStorage.removeItem(USER_KEY_STORE);
+};
+const loginSV = (email: string, password: string) => {
+  const fetchOptions = {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      email,
+      password,
+    }),
+  };
+  return fetch(`${process.env.REACT_APP_URL_SERVER}/api/v1/auth`, fetchOptions)
+    .then(handleResponse)
+    .then((res) => {
+      sessionStorage.setItem(USER_KEY_STORE, JSON.stringify(res));
+      return res;
+    });
+};
+
+export const userService = {
+  loginSV,
+  logoutSV,
+};
+
+// LOGINSV USE WITH AXIOS
++ npm i axios
+
++ Tạo helpers/axiosInstance
+const authInstance = axios.create({
+  baseURL: `${process.env.REACT_APP_URL_SERVER}/api/v1/auth/`,
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  withCredentials: true,
+});
+export const authPost = async (path: string, options = {}, other = {}) => {
+  const res = await authInstance.post(path, options, other);
+  return res;
+};
+
++ userService
+const loginSV = async (email: string, password: string) => {
+  const axiosOptions = {
+    body: { email, password },
+  };
+  const resPost = await authPost('', axiosOptions, {});
+  sessionStorage.setItem(USER_KEY_STORE, JSON.stringify(resPost));
+  return resPost?.data;
+};
+

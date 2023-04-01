@@ -1,0 +1,22 @@
+// HÀM LÀM TRÒN
+export const precisionRound = (number) => {
+    let precision = 5;
+    let factor = Math.pow(10, precision);
+    return Math.round(number * factor) / factor;
+};
+
+// HÀM FORMAT USD
+export const formatUSD = (number) => {
+    return new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'USD',
+    }).format(number);
+};
+
+// HÀM FORMAT VND
+export const formatVND = (number) => {
+    return new Intl.NumberFormat('vi-VN', {
+        style: 'currency',
+        currency: 'VND',
+    }).format(number);
+};

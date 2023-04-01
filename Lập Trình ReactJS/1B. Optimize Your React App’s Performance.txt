@@ -1,0 +1,21 @@
+https://dev.to/devland/how-to-optimize-your-react-apps-performance-1045
+
+1. Use Browser Performance Tools: Lighthouse (https://chrome.google.com/webstore/detail/lighthouse/blipmdconlkpinefehnmjammfjpmpbjk?hl=en)
+
+2. Use React.Suspense and React.Lazy for Lazy Loading Components
+import React, { Suspense } from 'react';
+const LazyComponent = React.lazy(() => import('./LazyComponent'));
+function MyComponent() {
+return (
+<div>
+  <Suspense fallback={<div>Loading....</div>}>
+      <LazyComponent />
+  </Suspense>
+</div>
+);
+}
+
+3. useMemo, useCallback (khi cần thiết, không lạm dụng)
+
+4. Optimizing your images
++ TinyPNG: https://tinypng.com/

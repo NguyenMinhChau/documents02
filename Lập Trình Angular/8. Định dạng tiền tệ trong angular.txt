@@ -1,0 +1,11 @@
+Angular Pipe
+
+-- Để định dạng tiền tệ trong angular ta cần làm như sau
+
+1. {$SỐ_TIỀN | currency} // thêm | currency và sau số tiền. Mặc định theo chuẩn USD
+
+2. Định dạng VND: {$SỐ_TIỀN | currency:'VND':'symbol':'1.0-0'} // symbol or code
+
+-- Đọc thêm trên docs angular về Pipe
+
+

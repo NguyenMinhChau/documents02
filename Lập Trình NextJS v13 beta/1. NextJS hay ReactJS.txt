@@ -1,0 +1,16 @@
+NEXTJS: là một React Framework do Vercel hậu thuẫn (có sẵn tất cả mọi thứ để bạn sử dụng, VD: router).
+
+REACTJS: là một thư viện (chỉ dùng build giao diện, muốn dùng router -> react-router-dom)
+
+TÍNH CHẤT NỔI BẬT CỦA NEXTJS: có sẵn tất cả mọi thứ để bạn sử dụng
+
+KHI NÀO DÙNG NEXTJS/REACTJS: ==> SEO (NextJS)
+			REACTJS				NEXTJS
+TYPE			Library				Framework
+Bootstrap		create-react-app			create-next-app
+Rendering		CSR					CSR, SSR and Static site generation
+Hosted on		Any kind of static server	NodeJS server
+SEO			NO					YES
+When to use		Internal/Private web app	Marketing/Landing pages/Blogs/
+			dashboard admin			eCommerce
+Code Playground	codesanbox.io			codesanbox.io

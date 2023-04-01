@@ -1,0 +1,17 @@
+- Tập trung dữ liệu về 1 nơi app.component.ts (App component)
+
+export class AppComponent {
+  ...dữ liệu và hàm xử lý
+}
+
+- Cách component con sử dụng:
+
++ <$Tên_selector [$Tên_tự_đặt]="$Tên_dữ_liệu"></$Tên_selector>
++ Đồng thời bên file component.ts của component con cũng phải khai báo như sau:
+export class TênComponent {
+  @Input() $Tên_tự_đặt;
+  // mảng
+  @Input() products: $Tên_class_quy định kiểu[] = [];
+  //number
+  @Input() num: number = 0;
+}

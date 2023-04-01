@@ -1,0 +1,21 @@
+** USAGE FOR NEXTJS VERSION 11 - NOT NEXTJS VERISON 13 BETA **
+. Automatic Static Optimization: Khi build sẽ tạo ra các file HTML tĩnh (có thể được hiển thị trước) nếu component/page không dùng phương thức getServerSideProps và
+getInitialProps
+
+. Ví dụ
++ Trường hợp Automatic Static Optimization: src/app/about/page.tsx
+function About () {
+  ...
+}
+==> Khi build sẽ tạo file about.html tĩnh -> request người dùng sẽ nhanh hơn
+
++ Trường hợp KHÔNG Automatic Static Optimization: src/app/about/page.tsx
+function About () {
+  ...
+}
+export async function getServerSideProps() {
+  return {
+    props: {}, // will be passed to the page component as props
+  }
+}
+==> Khi build sẽ tạo file about.js -> request người dùng sẽ chậm hơn do phải xử lý file about.js

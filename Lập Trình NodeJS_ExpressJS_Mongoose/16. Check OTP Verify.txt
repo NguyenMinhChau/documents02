@@ -1,0 +1,53 @@
+// [POST] /api/v1/authen/checkCodeVerify/:tokenVerify
+checkCodeVerify: async (req, res) => {
+        const { token } = req.params;
+        const { otp } = req.body;
+        if (!token) {
+            return res.json({
+                code: 2,
+                message: 'A token is required',
+            });
+        }
+        try {
+            const decoded = jwt.verify(token, process.env.JWT_ACCESS_TOKEN_SECRET);
+            VerifyAccount.findOne({ date: decoded.date }, (err, f) => {
+                if (f) {
+                    if (f.code === otp) {
+                        User.findOne({ email: decoded.email }, (errs, user) => {
+                            if (err)
+                                return res.json({
+                                    code: 1,
+                                    message: err?.message,
+                                });
+
+                            if (user) {
+                                user.verify = true;
+                                user.save();
+                                return res.json({
+                                    code: 0,
+                                    message: 'Verify account successfully',
+                                });
+                            } else {
+                                return res.json({
+                                    code: 2,
+                                    message: `User is not valid with email = ${decoded.email}`,
+                                });
+                            }
+                        });
+                    } else {
+                        return res.json({
+                            code: 2,
+                            message: `Otp iput is wrong or dead`,
+                        });
+                    }
+                } else {
+                    return res.json({
+                        code: 2,
+                        message: `Token is dead! Please order new Token for verify account`,
+                    });
+                }
+            });
+        } catch {
+            return res.status(500).json({ message: err.message });
+        }
+    },

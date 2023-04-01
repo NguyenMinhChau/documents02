@@ -1,0 +1,30 @@
+1. Object destructuring
+interface Student {
+  id: number;
+  name: string;
+  age: number;
+  gender: string;
+}
+
+const bob = {
+  id: 1,
+  name: 'Bob',
+  age: 18,
+  gender: 'male'
+}
+
+// DESTRUCTURING
+const {id, name} = bob;
+
+// REST OPERATOR
+const {id, ...rest} = bob;
+
+// SPREAD OPERATOR
+const bob2 = {
+   ...bob1,
+   name: 'Bob2'
+}
+
+2. Array destructuring: tương tự
+
+

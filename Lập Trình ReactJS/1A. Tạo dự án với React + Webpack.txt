@@ -1,0 +1,126 @@
+THAM KHẢO: https://fullstack.edu.vn/blog/phan-1-tao-du-an-reactjs-voi-webpack-va-babel.html
+- Webpack: 
++ Giúp module hóa ứng dụng frontend (js, image, css, scss,...) => giúp export/import các file.
++ Khi build webpack sẽ compiler thành các file có kích thước nhỏ hơn.
+
+1. Tạo root -> npm init
+
+2. Cài đặt webpack và webpack-cli: npm install webpack webpack-cli --save-dev
+
+3. Cài đặt react và react-dom: npm install react@latest react-dom@latest --save
+
+4. Cài đặt babel: npm install @babel/core babel-loader @babel/preset-env @babel/preset-react --save-dev
++ babel-core: Chuyển đổi ES6 về ES5
++ babel-loader: Cho phép chuyển các files Javascript sử dụng Babel & Webpack
++ babel-preset-env: Cài đặt sẵn giúp bạn sử dụng Javascript mới nhất trên nhiều môi trường khác nhau (nhiều trình duyệt khác nhau). Gói này đơn giản là support truyển đổi ES6, ES7, ES8, ES... về ES5.
++ babel-preset-react: Hỗ trợ chuyển đổi JSX về Javascript
+
+5. Tạo public/index.html: 
+...
+<body> 
+	<div id='root'></div>
+</body>
+...
+
+6. Tạo src/index.js
+import React from 'react' // nạp thư viện react
+import ReactDOM from 'react-dom' // nạp thư viện react-dom
+
+// Tạo component App
+function App() {
+    return (
+        <div>
+            <h1>Xin chào anh em</h1>
+        </div>
+    )
+}
+
+// Render component App vào #root element
+ReactDOM.render(<App />, document.getElementById('root'))
+
+7. Cài đặt Css-loader và style-loader giúp webpack có thể tải file *.css dưới dạng module: npm install css-loader style-loader --save-dev
+
+8. Tạo webpack.config.js tại thư mục gốc của dự án
+const path = require("path");
+
+module.exports = {
+  entry: "./src/index.js", // Dẫn tới file index.js ta đã tạo
+  output: {
+    path: path.join(__dirname, "/build"), // Thư mục chứa file được build ra
+    filename: "bundle.js" // Tên file được build ra
+  },
+  module: {
+    rules: [
+      {
+        test: /\.js$/, // Sẽ sử dụng babel-loader cho những file .js
+        exclude: /node_modules/, // Loại trừ thư mục node_modules
+        use: ["babel-loader"]
+      },
+      {
+        test: /\.css$/, // Sử dụng style-loader, css-loader cho file .css
+        use: ["style-loader", "css-loader"]
+      }
+    ]
+  },
+  // Chứa các plugins sẽ cài đặt trong tương lai
+  plugins: [
+  ]
+};
+
+9. Tạo file .babelrc tại root dùng để cấu hình cho thư viện Babel.
+{
+    "presets": [
+        "@babel/preset-env",
+        "@babel/preset-react"
+    ]
+}
+
+10. Thêm scripts cho dự án tại package.json
+"scripts": {
+    ...
+    "start": "webpack --mode development --watch",
+    "build": "webpack --mode production"
+}
+
+11. Chạy dự án: npm start
+- Xuất ra file build/bundle.js (vì ta đã cấu hình trong webpack.config.json) và đây là code trong file src/index.js
+
+12. Chạy dự án với Live Server ta sẽ làm 2 việc:
+- Thêm thẻ script link tới file build/bundle.js trong public/index.html
+- Chạy dự án với Live Server
+
+13. Sửa nội dung src/index.js => F5 trang sẽ thấy sự thay đổi
+
+14. Cài đặt html-webpack-plugin để giúp chúng ta "nhờ" Webpack sau khi build ra build/bundle.js thì thêm hộ chúng ta vào public/index.html luôn chứ không phải thêm script như trên nữa và khi thay đổi khỏi cần F5 lại trang: npm install html-webpack-plugin --save-dev
+
+15. Tại webpack.config.js hãy thêm:
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+module.exports = {
+  ...
+  // Chứa các plugins sẽ cài đặt trong tương lai
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: "./public/index.html"
+    })
+  ]
+};
+
+16. Xóa bỏ thẻ script link tới file build/bundle.js trong public/index.html
+
+17. Chạy lại npm start để thấy kết quả.
+
+18. Cài đặt webpack-dev-server để có được một web server kết hợp được Webpack và Node nhé (tự động bật khi start dự án):npm install webpack-dev-server --save-dev
+
+19. Sửa lại cấu hình scripts trong package.json:
+"scripts": {
+    ...
+    "start": "webpack-dev-server --mode development --open --hot",
+    ...
+}
+
+20. Chạy lại dự án: npm start
+
+
+
+
+

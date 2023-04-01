@@ -1,0 +1,13 @@
+USAGE: <th>{{@index}}</th>
+
+**TĂNG INDEX**
+Tại src/index.js tạo helpers
+app.engine('hbs', engine({
+	extname: '.hbs',
+	helpers: {
+	   sum: (a,b) => a + b,
+	}
+}))
+
+USAGE: <th>{{sum @index 1}}</th>
+

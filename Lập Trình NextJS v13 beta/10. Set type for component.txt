@@ -1,0 +1,18 @@
+** TRUYỀN PROPS TẠI COMPONENT CON **
+type AppProps = {
+  isUser: boolean;
+}
+
+const MyApp: React.FC<AppProps> = ({ isUser }) => {
+  return ...
+}
+HOẶC
+export default function MyApp({ isUser }: AppProps) {
+  return <></>;
+}
+HOẶC
+export default class MyApp extends React.Component<AppProps> {
+  render() {
+	return <p>{this.props.isUser}</p>;
+  }
+}

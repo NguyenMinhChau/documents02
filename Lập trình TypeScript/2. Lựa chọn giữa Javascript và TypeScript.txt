@@ -1,0 +1,16 @@
+Tùy vào cá nhân và hoàn cảnh mà sẽ chọn JS hay TS
+
+Javascript: không ràng buộc về kiểu dữ liệu, linh hoạt hơn
+
+TypeScript: ràng buộc rất chặt về kiểu dữ liệu, giúp code sướng hơn, nhắc code cũng tối ưu hơn, thường hay làm việc với team
+
+Chuyển JS sang TS:
+- Chuyển sang typescript với việc dùng any
+- Dần dần sẽ refector any thành type tương ứng cho đến cover hết thì thôi
+
+Tóm lại nên dùng TypeScript:
+- Javascript + optional type system
+- auto complete khi code tốt hơn
+- Giúp team hạn chế được lỗi vặt, đặc biệt là typo (chữ hoa/thường)
+- Các thư viện đa phần đã hỗ trợ typescript
+- Các dự án đã chuyển dần sang typescript

@@ -1,0 +1,76 @@
+sendMailVerify: async (req, res) => {
+        try {
+            const { email } = req.body;
+            const user = await User.findOne({ email });
+            if (!user) {
+                return res.json({
+                    code: 1,
+                    message: 'User not found.',
+                });
+            } else {
+                const date = Date.now();
+                const activation_token = jwt.sign(
+                    {
+                        id: user._id,
+                        email: user.email,
+                        username: user.username,
+                        date,
+                    },
+                    process.env.JWT_ACCESS_TOKEN_SECRET,
+                    {
+                        expiresIn: '5m',
+                    }
+                );
+                // generater otp
+                const otp = otpGenerator.generate(6, {
+                    lowerCaseAlphabets: false,
+                    upperCaseAlphabets: false,
+                    specialChars: false,
+                });
+                const verify = new VerifyAccount({
+                    code: otp,
+                    email: user.email,
+                    token: activation_token,
+                    date,
+                });
+                verify
+                    .save()
+                    .then((f) => {
+                        if (f) {
+                            const mailContentActivation = `$HTML`;
+                            let resultSendMail = sendMailFunc(
+                                user.email,
+                                mailContentActivation,
+                                `TITLE - Xác thực cho tài khoản @${user.email}`
+                            );
+                            resultSendMail
+                                .then((val) => {
+                                    return res.json({
+                                        code: 0,
+                                        message: `Send mail for verify account successfully to email = ${user.email}`,
+                                    });
+                                })
+                                .catch((err) => {
+                                    return res.json({
+                                        code: 1,
+                                        message: err?.message,
+                                    });
+                                });
+                        } else {
+                            return res.json({
+                                code: 2,
+                                message: `Can not save model verify account of user with email = ${user.email}`,
+                            });
+                        }
+                    })
+                    .catch((err) => {
+                        return res.json({
+                            code: 1,
+                            message: err?.message,
+                        });
+                    });
+            }
+        } catch (err) {
+            return res.status(500).json({ message: err.message });
+        }
+    },

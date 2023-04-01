@@ -1,0 +1,25 @@
+Cú pháp: (/ký hiệu/) 
+
+Chuỗi kiểm tra: "Học Javascript Regex + Angular @ 2023"
+
+Ký hiệu	Chức năng				Ví dụ			Kết quả
+
+.		Đại diện 1 ký tự bất kì		..Regex		t Regex
+		Bao nhiêu dấu chấm => lấy
+		bao nhiêu ký tự
+		
+^		Tìm kiếm giá trị đầu chuỗi	^Học			true
+
+$      	Tìm kiếm giá trị cuối chuỗi   Regex$		true
+
+\		Tìm ký tự đặc biệt		\+			true
+
+[]		Tìm ký tự tập hợp			[^Học\+\@]
+		Tìm nhiều ký tự, các
+		ký tự trong [] viết 
+		liền nhau
+
+[1][2]	Tìm theo cặp, lấy tất		[ab][vs]: tìm trong		
+		cả các trường hợp theo		trong chuỗi có các 
+		kiểu chéo nhau 			ký tự av,as,bv,bs
+		(nhân phân phối 1 vs 2)

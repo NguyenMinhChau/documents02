@@ -1,0 +1,29 @@
+1. npm init
+
+2. npm i json-server
+
+3. npm i nodemon --save-dev
+
+4. file entrypoint: src/index.js
+
++ Custom router
+Ban đầu: server.use(router); => http://localhost:PORT/data
+Custom: server.use('/api', router); => http://localhost:PORT/api/data
+
++ Custom when POST
+server.use((req, res, next) => {
+  if (req.method === 'POST') {
+    req.body.createdAt = Date.now(); // tự động thêm createdAt vào khi POST
+    req.body.updatedAt = Date.now(); // tự động thêm updatedAt vào khi POST
+  }
+  // Continue to JSON Server router
+  next();
+});
+
+5. Thao khảo custom https://github.com/typicode/json-server#module
+
+6. Viết script
+"scripts": {
+  "start": "node src/index.js",
+  "dev": "nodemon src/index.js"
+},

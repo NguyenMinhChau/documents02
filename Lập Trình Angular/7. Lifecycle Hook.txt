@@ -1,0 +1,10 @@
+-- Gọi khi mới vào app
+
+// thêm thuộc tính OnInit và app.component.ts
+export class AppComponent implements OnInit{
+  ngOnInit() {
+    ...code xử lý khi mới vào app
+  }
+}
+
+-- Tham khảo thêm các lifecycle hook trên trang chủ angular

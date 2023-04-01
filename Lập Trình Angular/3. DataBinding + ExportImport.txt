@@ -1,0 +1,16 @@
+1. Data Binding
+- Thường truyền data vào trong file $Tên_component.component.ts và lấy ra sử dụng ở file $Tên_component.component.html bằng cách sử dụng {{}}
+
+2. Export và Import
+- Thường tạo file trong thư mục app với cấu trúc $Tên.model.ts để những nơi khác có thể dùng được
+Ví dụ:
+export class Product {
+  'id': string;
+  'name': string;
+  'desc': string;
+  'thumbnail': string;
+  'price': number;
+  'quantity': number;
+}
+
+- Sử dụng: import {Product} from '../product.model'

@@ -1,0 +1,60 @@
+KIỂU DỮ LIỆU TRẢ VỀ CỦA FUNCTION
+
+function sayHello() {
+  console.log('Hi');
+} // ts: function sayHello(): void vì không biết return về gì
+=====
+function fail(msg:string) {
+  throw new Error(msg)
+}// ts: function fail(msg:string): never vì throw 1 lỗi
+=====
+function sum(a:number, b:number) {
+  return a + b;
+} // ts: func sum(a:number, b:number): number
+=====
+function sum(a:number, b:number): number {
+  return a + b;
+} // ts: func sum(a:number, b:number): number
+=====
+function sum(a:number, b:number):number {
+  return a + b.toString();
+} // ts: error
+
+OPTIONAL AND DEFAULT PARAMETER
+
+1.OPTIONAL
+function getLength(numberList?: number[]) {
+  return Array.isArray(numberList) ? numberList.length : 0;
+} // ts: function getLength(numberList?: number[] | undefined): number
+
+2. DEFAULT PARAMETER
+function getLength(numberList: number[] = []) {
+  return Array.isArray(numberList) ? numberList.length : 0;
+} // ts: function getLength(numberList: number[]): number
+
+3. KHÔNG THỂ DÙNG KẾT HỢP OPTIONAL VÀ DEFAULT PARAMETER
+
+DESTRUCTURING PARAMETER
+
+4. function createStudent(student: {id: number, name: string, age: number}){
+      const {id, name, age} = student;
+      console.log(id,name,age);
+}
+
+createStudent({id: 1, name: 'Bob', age: 20})
+
+HOẶC
+
+interface Student {
+  id: number;
+  name: string;
+  age: number;
+}
+function createStudent(student: Student){
+      const {id, name, age} = student;
+      console.log(id,name,age);
+}
+createStudent({id: 1, name: 'Bob', age: 20} as Student)
+
+
+

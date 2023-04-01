@@ -1,0 +1,16 @@
++ https://github.com/typicode/json-server#generate-random-data
+  .https://github.com/faker-js/faker (ở đây sử dụng thư viện này)
+  .https://github.com/boo1ean/casual
+
+1. npm install @faker-js/faker --save-dev
+
+2. src/generateData.js
+
+3. Viết script:
+"scripts": {
+  "start": "npm run generateData && node src/index.js",
+  "generateData": "node src/generateData.js",
+  "dev": "nodemon src/index.js"
+},
+
+4. Chạy lệnh

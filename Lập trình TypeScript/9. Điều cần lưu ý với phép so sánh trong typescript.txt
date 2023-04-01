@@ -1,0 +1,20 @@
+1. Nhắc lại về so sánh == và ===
+
++ == : so sánh về giá trị, không so sánh về kiểu (có thể convert chuỗi "2" thành số 0 để so sánh)
+"2" == 2 => TRUE
+false == 0 => TRUE
+
++ === : so sánh về giá trị và về kiểu dữ liệu
+"2" === 2 => FALSE
+fasle === 0 => FALSE
+
+2. So sánh object, array, function: Chỉ quan tâm đến địa chỉ, KHÔNG quan tâm đến giá trị
+
+const studentA ={id: 1};
+const studentB = studentA;
+
+studentA === studentB => TRUE
+studentA === {id:1} => FALSE
+
+3. So sánh tham trị: Chỉ quan tâm đến giá trị
+studentA.id === studentB.id => TRUE

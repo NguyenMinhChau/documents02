@@ -1,0 +1,20 @@
+- Tập trung dữ liệu về 1 nơi app.component.ts (App component)
+
+export class AppComponent {
+  ...dữ liệu và hàm xử lý
+}
+
+- Cách component con sử dụng funtion như sau:
+
++ <$Tên_selector ($Tên_tự_đặt)="$Tên_hàm($event)"></$Tên_selector>
++ Đồng thời bên file component.ts của component con cũng phải khai báo như sau:
+export class TênComponent {
+  @Output() $Tên_tự_đặt = new EventEmitter();
+
+  removeItem(id:string):void{
+	this.$Tên_tự_đặt.emit(id);
+  }
+  updateQuantity(id:string,e:any):void{
+    this.onUpdateQuantity.emit({id, quantity: e.value});
+  }
+}

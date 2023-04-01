@@ -1,0 +1,26 @@
+- Do facebook phát triển dùng để quản lý trạng thái của app (chỉ dùng với ReactJS)
+
+- Xoay quanh 3 thành phần chính
++ RecoilRoot
++ atom: xem như initialState
+export const cartState = atom({
+  key: 'cart',
+  default: [...]
+})
++ selector: các hàm xử lý
+export const cartTotal = seletor({
+  key: 'cartTotal',
+  get: ({get}) => {
+    const cars = get(cartState);
+    return cars.reduce(() => {...},0)
+  }
+})
+
+- Lấy giá trị cartTotal
+function CartInfo(props) {
+  const total = useRecoilValue(cartTotal);
+}
+
+- Trang chủ: https://recoiljs.org/
+
+- Slide: https://drive.google.com/file/d/1VxeAVLHnC16Qh0FGy_-YP9-SFEkLih_X/view

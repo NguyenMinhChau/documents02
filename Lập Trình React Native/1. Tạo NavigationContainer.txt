@@ -1,0 +1,73 @@
+// MAIN
+const MyTheme = {
+  ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
+    primary: PRIMARY_COLOR,
+    background: '#fafafa',
+  },
+};
+const Stack = createNativeStackNavigator();
+
+<NavigationContainer theme={MyTheme}>
+      <Stack.Navigator
+        initialRouteName={routersMain.MainPage}
+        screenOptions={{
+          headerShown: false,
+        }}>
+        {MainObject.map((item, index) => {
+          return (
+            <Stack.Screen
+              key={index}
+              name={item.name}
+              component={item.component}
+              options={
+                item.options === 'headerNull'
+                  ? {header: () => null}
+                  : item.options === 'custom'
+                  ? {
+                      title:
+                        item?.name === routersMain.SendFunds
+                          ? ''
+                          : item.name,
+                      headerShown:
+                        item?.name === routersMain.SendFunds
+                          ? false
+                          : true,
+                      headerTitleAlign: 'center',
+                      headerTintColor: WHITE_COLOR,
+                      headerTitleStyle: {
+                        fontWeight: 'bold',
+                        letterSpacing: 1,
+                      },
+                      headerStyle: {
+                        backgroundColor: PRIMARY_COLOR,
+                      },
+                    }
+                  : {}
+              }
+            />
+          );
+        })}
+      </Stack.Navigator>
+    </NavigationContainer>
+
+// ROUTER MAIN
+export const routersMain = {
+  Login: 'Login',
+  Deposits: 'Nạp tiền',
+}
+
+// MAIN OBJECT
+const MainObject = [
+  {
+    name: routersMain.Login,
+    component: Login,
+    options: 'headerNull',
+  },
+  {
+    name: routersMain.Deposits,
+    component: Deposits,
+    options: 'custom',
+  },
+]

@@ -1,0 +1,81 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import React, { useState } from 'react';
+
+type PaginationProps = {
+  onPageChange: Function;
+  pageNumber: number;
+  pageLimit: number;
+  totalRecords: number;
+};
+
+function PaginationCP(props: PaginationProps) {
+  const { onPageChange, pageNumber, pageLimit, totalRecords } = props;
+  const [currentPage, setCurrentPage] = useState(1);
+  const totalPage = Math.ceil(totalRecords / pageLimit);
+  const startPageIndex = Math.max(currentPage - pageLimit, 1);
+  const endPageIndex = Math.min(currentPage + pageLimit, totalPage);
+
+  const range = (from: number, to: number, step = 1) => {
+    let i = from;
+    const range = [];
+    while (i <= to) {
+      range.push(i);
+      i += step;
+    }
+    return range;
+  };
+  const pages = range(startPageIndex, endPageIndex);
+  const handleClick = (pageNumber: number) => {
+    setCurrentPage(pageNumber);
+    onPageChange(pageNumber);
+  };
+  return (
+    <nav aria-label="...">
+      <ul className="pagination">
+        <li className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}>
+          <button
+            className="page-link"
+            onClick={() => handleClick(currentPage - 1)}
+          >
+            Previous
+          </button>
+        </li>
+
+        {pages.map((page, index) => (
+          <li
+            key={index}
+            className={`page-item ${currentPage === page ? 'active' : ''}`}
+          >
+            <button className="page-link" onClick={() => handleClick(page)}>
+              {page}
+            </button>
+          </li>
+        ))}
+        <li
+          className={`page-item ${
+            currentPage === endPageIndex ? 'disabled' : ''
+          }`}
+        >
+          <button
+            className="page-link"
+            onClick={() => handleClick(currentPage + 1)}
+          >
+            Next
+          </button>
+        </li>
+      </ul>
+    </nav>
+  );
+}
+
+export default PaginationCP;
+
+// USEAGE
+<PaginationCP
+            onPageChange={(pageNumber: number) => {
+              // todo: setPage, callAPI
+            }}
+            pageNumber={1}
+            pageLimit={5}
+            totalRecords={20}
+          />

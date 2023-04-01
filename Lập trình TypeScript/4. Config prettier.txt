@@ -1,0 +1,13 @@
+1. Tạo file .prettierrc bên ngoài root
+
+2. Vào https://prettier.io/playground/ định dạng
+
+3. Copy JSON config file và .prettierrc và thêm "parser: "$LANGUAGE"
+
+4. setings.json
+"[typescript]": {
+     "editor.defaultFormatter": "esbenp.prettier-vscode"
+},
+//"prettier.configPath": ".prettierrc"
+
+5. Reload và kiểm tra

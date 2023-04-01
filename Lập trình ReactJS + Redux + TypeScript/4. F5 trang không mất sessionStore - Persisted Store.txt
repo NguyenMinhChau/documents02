@@ -1,0 +1,38 @@
+1. npm i redux-persist @types/redux-persist
+
+2. app/index.ts: Chỉnh sửa như sau
+import { persistReducer, persistStore } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
+const rootReducer = combineReducers({
+  account: accountReducer,
+});
+const persistConfig = {
+  key: 'root',
+  storage,
+  whitelist: ['account'],
+};
+const persistedReducer = persistReducer(persistConfig, rootReducer);
+
+const storeConfig = () => {
+  const store = configureStore({
+    reducer: persistedReducer,
+    ...
+  });
+  return store;
+}
+
+export const store = storeConfig();
+export const persistStoreRedux = persistStore(store);
+
+3. src/index.ts: Chỉnh sửa như sau
+...
+import { PersistGate } from 'redux-persist/integration/react';
+import { store, persistStoreRedux } from './app/';
+
+<Provider store={store}>
+      <BrowserRouter>
+        <PersistGate loading={null} persistor={persistStoreRedux}>
+          <App />
+        </PersistGate>
+      </BrowserRouter>
+    </Provider>

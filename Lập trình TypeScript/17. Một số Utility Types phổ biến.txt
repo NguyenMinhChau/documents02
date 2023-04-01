@@ -1,0 +1,15 @@
+THAM KHẢO: https://www.typescriptlang.org/docs/handbook/utility-types.html 
+
+1. Partial: 
+
+2. Required:
+
+3. Readonly:
+
+4. Record<Keys, Type>: định nghĩa các Keys có kiểu là Types
+
+5. Pick<Type, Keys>: chỉ lấy những Keys có trong Type
+
+6. Omit<Type, Keys>: loại bỏ các Keys có trong Type
+
+7. ReturnType:

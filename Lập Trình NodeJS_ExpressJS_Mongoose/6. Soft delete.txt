@@ -1,0 +1,44 @@
+// Controller xử lý xóa thật
+$MODEL.deleteOne({_id: req.params.id})
+.then(() => res.redirect('/me/object')).catch(next);
+
+**Cài đặt thư viện hỗ trợ: npm i mongoose-delete
+. Tại MODEL
+const mongooseDelete = require('mongoose-delete');
+
+const PetSchema = new Schema({
+    name: String
+});
+
+PetSchema.plugin(mongooseDelete);
+
+// Sửa lại controller xử lý xóa
+$MODEL.delete({_id: req.params.id})
+.then(() => res.redirect('/me/object')).catch(next);
+// XÓA/KHÔI PHỤC _ID NẰM TRONG 1 MẢNG _IDS
+Course.delete({ _id: { $in: courseIds } })
+
+// Không lấy ra những bản ghi có deleted: true
+. Tại MODEL: PetSchema.plugin(mongooseDelete, {overrideMethods: 'all'});
+// THÊM DELETEAT
+. Tại MODEL: PetSchema.plugin(mongooseDelete, {
+	deletedAt: true, overrideMethods: 'all'
+  });
+// LẤY RA CÁC OBJECT ĐÃ BỊ XÓA MỀM
+$MODEL.findDelete({}).then(items => {data: items} ).catch(next);
+// KHÔI PHỤC: Tạo actions cập nhật trường deleted: true -> false;
+. Lấy ra tất cả nút khôi phục
+. Lắng nghe sự kiện click -> xóa theo id (submit form ẨN với phương thức PATCH);
+. controller xử lý.
+$MODEL.restore({_id: req.params.id})...
+// XÓA VĨNH VIỄN
+. Lắng nghe sự kiện click nút xóa vĩnh viễn -> hiện modal xác nhận -> xóa theo id (submit form ẨN với phương thức DELETE);
+. controller xử lý.
+$MODEL.deleteOne({_id: req.params.id})...
+// DELETED COUNT DOCUMENT
+. controller xử lý.
+Promise.all([$MODEL.find({}), Course.countDocumentsDeleted({})])
+.then(([course, count]) => res.render('coursesMe/listCourse', {
+   course: mutipleObject(course),
+   count,
+})).catch(next);

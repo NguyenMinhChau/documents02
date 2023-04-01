@@ -1,0 +1,25 @@
+THAM KHẢO: https://nextjs.org/docs/getting-started
+1.Các công cụ: https://drive.google.com/file/d/10w5WxSFdiQGHkibwyYEggwkcoQDGbcFK/view
+
+2. npx create-next-app@latest --typescript
+
+3. Deploy bằng Vercel (tự động build + deploy code mới khi repo git thay đổi)
++ Push dự án lên github
++ Vào https://vercel.com/new -> Import project from github repo
++ Skip Create Team
++ Config project (Enviroment Variables) -> Deploy
+
+4. Các script trong package.json
+- npm run dev: Run project in develop process
+- npm start: Run project in production
+- npm run lint: Check ESlint in project in develop process
+- npm run build: Build project for production
+
+5. Dùng NextJS cho FE hay cả BE?
+- NextJS cơ bản được host trên NodeJS -> Làm Backend được (file src/app/api kết hợp NodeJS + ExpressJS) -> nhưng KHÔNG NÊN.
+- Nên tách biệt frontend và backend.
+
+6. Check client/server
+if(typeof window !== 'undefined'){ => PHÍA CLIENT
+  // do something on client side
+}

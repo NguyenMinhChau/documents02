@@ -1,0 +1,46 @@
+. Cài đặt OpenSSL: https://www.stechies.com/installing-openssl-windows-10-11/
+
+. Tại thư mục tạo keys, VD: root/src/keys -> Mở terminal (root/src/keys)
+
+. Generate a 2048-bit RSA private key: openssl genrsa -out private_key.pem 2048
+
+. Generate the corresponding public key: openssl rsa -in private_key.pem -outform PEM -pubout -out public_key.pem
+
+. View content:
+cat private_key.pem
+cat public_key.pem
+
+. USAGE
+const jwt = require('jsonwebtoken');
+const path = require('path');
+const fs = require('fs');
+
+const location = path.join(__dirname, 'keys');
+const privatedKey = fs.readFileSync(`${location}/private_key.pem`);
+const publicKey = fs.readFileSync(`${location}/public_key.pem`);
+
+const token = jwt.sign({ name: 'Nguyễn Minh Châu' }, privatedKey, {
+    algorithm: 'RS256',
+    expiresIn: '1h',
+});
+jwt.verify(
+    token,
+    publicKey,
+    {
+        algorithms: ['RS256'],
+    },
+    (err, item) => {
+        if (err) {
+            console.log('err', 'Lỗi key');
+        } else {
+            console.log('result: ', item);
+        }
+    }
+);
+
+** TẠO KEY VỚI VIỆC NHẬP THÔNG TIN CÁ NHÂN/CÔNG TY/ĐẤT NƯỚC,...
+. CLI: openssl req -newkey rsa:2048 -nodes -keyout $NAME_PRIVATE.key -out $NAME_PUBLIC.csr
+
+** TẠO PUBLIC KEY TỪ PRIVATED KEY CÓ SẴN
+. CLI: openssl req -key $NAME_PRIVATE.key -new -out $NEW_NAME_PUBLIC.csr
+

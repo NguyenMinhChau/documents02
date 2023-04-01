@@ -1,0 +1,46 @@
+1. Cài đặt thư viện: npm install @reduxjs/toolkit react-redux
+
+2. Folder src/app
+
+3. Tạo reducer:
+import { createSlice } from '@reduxjs/toolkit';
+export const $NAME_REDUCER = createSlice({
+	name: $NAME_SLICE,
+	initialState: {},
+	reducers: {
+	   incremented: (state) => {
+            state.counter += 1;
+            return state;
+         },
+	   ...
+	}
+})
+export const { incremented } = $NAME_REDUCER.actions;
+export default $NAME_REDUCER.reducer;
+
+4. Tạo store:
+import { configureStore } from '@reduxjs/toolkit';
+const store = configureStore({
+    reducer: {
+        $NAME_SLICE: $NAME_REDUCER,
+    },
+});
+
+5. Tạo Provider file index.js
+import store from './app/store';
+import { Provider } from 'react-redux';
+
+<Provider store={store}>
+      <App />
+</Provider>
+
+6. Sử dụng
+import { useSelector, useDispatch } from 'react-redux';
+import { incremented } from './app/$NAME_REDUCER';
+
+const counter = useSelector((state) => state.$NAME_SLICE.$KEY_OBJECT);
+const dispatch = useDispatch();
+
+const submitIncremented = () => {
+     dispatch(incremented());
+};

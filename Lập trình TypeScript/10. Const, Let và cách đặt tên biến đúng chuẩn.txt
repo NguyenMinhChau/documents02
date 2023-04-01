@@ -1,0 +1,7 @@
+1. Khi nào dùng const: LUÔN ƯU TIÊN DÙNG, ĐỔI SANG LET KHI CẦN THIẾT
+- Khi dùng cho hằng số UPPERCASE
+- Dùng cho biến mà không có nhu cầu thay đổi giá trị camelCase
+
+2. Khi nào dùng let: Khi dùng cho biến có nhu cầu thay đổi giá trị
+
+3. Đặt tên biến UPPERCASE (hằng số), biến theo dạng camelCase

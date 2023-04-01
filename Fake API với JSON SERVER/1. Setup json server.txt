@@ -1,0 +1,12 @@
+1. npm i json-server or npm i -g json-server
+
+2. Tạo file db.json
+
+3. Ghi cấu trúc db để test
+
+4. Ghi script
+"scripts": {
+   "start": "json-server --watch db.json",
+ },
+
+5. Chạy dự án

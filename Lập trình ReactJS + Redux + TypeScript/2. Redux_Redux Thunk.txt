@@ -1,0 +1,236 @@
+1. npm install @reduxjs/toolkit react-redux @types/react-redux redux-thunk @types/redux-thunk redux @types/redux
+*redux-thunk chứa 1 middleware hỗ trợ xử ly các actions dưới dạng async/await tự động lấy kết quả đẩy qua thằng reducer
+
+2. Tạo thư mục app/$TÊN_MỖI_PHÂN_QUYỀN (VD: app/user ; app/admin ; ...)
+
+3. Trong mỗi thư mục phân quyền
++ Tạo types.ts: Chứa các actions
+export const LOGIN_REQUEST = 'LOGIN_REQUEST';
+export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
+
++ Tạo state.ts: Chứa các cấu trúc/kiểu dữ liệu initialState và các cấu trúc/kiểu dữ liệu khác
+interface AuthenticatorUser {
+  _id: string;
+  first_name: string;
+  last_name: string;
+  email: string;
+  avatar: string;
+}
+// INITIALSTATE
+export interface AccountState {
+  user: AuthenticatorUser | null;
+  loading: boolean;
+  error: string | null;
+  token: string | null;
+}
+
++ Tạo payloads.ts: Tạo các cấu trúc/kiểu dữ kiệu của payload khi dispatch
+export interface LoginRequest {
+  type: typeof LOGIN_REQUEST;
+  payload: {
+    email: string;
+    password: string;
+  };
+}
+export interface LoginSuccess {
+  type: typeof LOGIN_SUCCESS;
+  payload: {
+    token: string;
+  };
+}
+export type ActionsType = LoginRequest | LoginSuccess;
+
++ Tạo reducer.ts: Các hàm xử lý
+const initialState: AccountState = {  // initialstate sử dụng
+  user: null,				  cấu trúc/kiểu dữ liệu của
+  loading: false,				  AccountState bên trên
+  error: null,
+  token: null,
+};
+
+export const accountReducer = (
+  state: AccountState = initialState,
+  action: ActionsType
+): AccountState => {
+  switch (action.type) {
+    case LOGIN_REQUEST:
+      console.log('Login request: ', action.payload);
+      return {
+        ...state,
+        loading: true,
+      };
+    case LOGIN_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        token: action.payload.token,
+      };
+    default:
+      return state;
+  }
+};
+
++ Tạo actions.ts
+ACTIONS USE WITH FETCH API
+import { Dispatch } from 'react';
+import { userService } from '../../services';
+import { ActionsType } from './payloads';
+import { LOGIN_FAILURE, LOGIN_REQUEST, LOGIN_SUCCESS } from './types';
+
+const loginAC = (
+  email: string,
+  password: string,
+  dispatch: Dispatch<ActionsType>
+) => {
+  dispatch({
+    type: LOGIN_REQUEST,
+    payload: {
+      email,
+      password,
+    },
+  });
+  userService.loginSV(email, password).then(
+    (res) => {
+      dispatch({
+        type: LOGIN_SUCCESS,
+        payload: res,
+      });
+    },
+    (error) => {
+      dispatch({
+        type: LOGIN_FAILURE,
+        payload: { message: error.toString() },
+      });
+    }
+  );
+};
+
+export const userActions = {
+  loginAC,
+};
+
+ACTIONS TYPE USE WITH AXIOS: USE TRY CATCH
+const loginAC = async (
+  email: string,
+  password: string,
+  dispatch: Dispatch<ActionsType>,
+  history: any,
+  setSubmit: any
+) => {
+  dispatch({
+    type: LOGIN_REQUEST,
+    payload: {
+      email,
+      password,
+    },
+  });
+  try {
+    const resLogin = await userService.loginSV(email, password);
+    dispatch({
+      type: LOGIN_SUCCESS,
+      payload: resLogin,
+    });
+    setSubmit(false);
+    history(routers.home);
+  } catch (error: any) {
+    dispatch({
+      type: LOGIN_FAILURE,
+      payload: {
+        message: error?.response?.data?.message || 'Something went wrong',
+      },
+    });
+  }
+};
+
+
+4. Tại app/index.ts
+import { combineReducers, compose } from 'redux';
+import { configureStore } from '@reduxjs/toolkit';
+import thunkMiddleware from 'redux-thunk';
+import { accountReducer } from './accounts/reducer';
+
+const rootReducer = combineReducers({
+  account: accountReducer,
+});
+
+export type AppState = ReturnType<typeof rootReducer>;
+
+// BẬT DEVTOOLS REDUX TRÊN TRÌNH DUYỆT
+declare global {
+  interface Window {
+    __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose;
+  }
+}
+
+const composeEnhancers =
+  (typeof window !== 'undefined' &&
+    window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) ||
+  compose;
+
+// STORE CỦA APP
+export default function storeConfig() {
+  const store = configureStore({
+    reducer: rootReducer,
+    middleware: (getDefaultMiddleware) =>
+      getDefaultMiddleware({
+        thunk: {
+ 	    // ÁP DỤNG MIDDLEWARE REDUX-THUNK
+          extraArgument: [thunkMiddleware],
+        },
+      }),
+    devTools: process.env.NODE_ENV !== 'production',
+  });
+  return store;
+}
+
+5. SỬ DỤNG
++ src/index.ts
+import { Provider } from 'react-redux';
+import storeConfig from './app/';
+
+const store = storeConfig();
+<Provider store={store}>
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+ </Provider>
+
++ Các file sử dụng KHI CHƯA CÓ FILE ACTIONS.TS
+import { useDispatch, useSelector } from 'react-redux';
+import { AppState } from '../../app/';
+import { ActionsType } from '../../app/accounts/payloads';
+import { AccountState } from '../../app/accounts/state';
+import { LOGIN_REQUEST } from '../../app/accounts/types';
+const user: AccountState = useSelector((state: AppState) => state.account);
+  console.log(user);
+  const dispatch = useDispatch();
+  const handleLogin = (e: any) => {
+    e.preventDefault();
+    dispatch({
+      type: LOGIN_REQUEST,
+      payload: { email: '@gmail', password: '123' },
+    } as ActionsType);
+  };
+
++ CÁC FILE SỬ DỤNG KHI ĐÃ CÓ ACTIONS.TS
+import { useSelector, useDispatch } from 'react-redux';
+import { AppState } from '../../app/';
+import { userActions } from '../../app/accounts/actions';
+import { AccountState } from '../../app/accounts/state';
+const [values, setValues] = useState({
+    email: '',
+    password: '',
+  });
+  const user: AccountState = useSelector((state: AppState) => state.account);
+  const dispatch = useDispatch();
+  const { email, password } = values;
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setValues({ ...values, [name]: value });
+  };
+  const handleLogin = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    if (email && password) {
+      userActions.loginAC(email, password, dispatch);
+    }
+  };

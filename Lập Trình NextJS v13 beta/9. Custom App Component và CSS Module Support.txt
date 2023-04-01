@@ -1,0 +1,10 @@
+1. File đặt biến css global: Các file css global luôn được import vào file src/app/layout.tsx
+import './global.css';
+import './color.css';
+import './reset.css';
+
+2. File css từng component: src/app/$component/$name.module.css
+
+USAGE: 
+import styles from './$name.module.css';
+<h1 className={styles.cl_red}>ABOUT PAGE</h1>

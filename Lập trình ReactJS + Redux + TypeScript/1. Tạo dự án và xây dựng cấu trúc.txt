@@ -1,0 +1,9 @@
+1. npx create-react-app $NAME --template typescript
+
+2. Tạo cấu trúc folder
+Lưu ý sẽ có 2 file
++ *.ts: dùng viết typescript thuần
++ *.tsx: dùng để viết các trang giao diện có chứa html
++ Các file CSS dùng bình thường
+
+3. Code giao diện và cài đặt các thư viện cần thiết khác

@@ -1,0 +1,32 @@
+app/index.ts: Chỉnh sửa như sau:
+...
+export const store = storeConfig();
+let currentState = store.getState() as AppState;
+store.subscribe(() => {
+  let previousState = currentState;
+  currentState = store.getState() as AppState;
+  if (previousState.account !== currentState.account) {
+    const token = currentState.account.token;
+    if (token) {
+      autoSetAuthToken(token);
+    }
+  }
+});
+export const persistStoreRedux = persistStore(store);
+
+//utils/helpers/autoSetTokenRequest.ts
+import axios from 'axios';
+const api = axios.create({
+  baseURL: `${process.env.REACT_APP_URL_SERVER}/api/v1/`,
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  withCredentials: true,
+});
+export const autoSetAuthToken = (token: string) => {
+  if (token) {
+    api.defaults.headers.common['x-auth-token'] = token;
+  } else {
+    delete api.defaults.headers.common['x-auth-token'];
+  }
+};

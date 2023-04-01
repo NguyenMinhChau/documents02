@@ -1,0 +1,9 @@
+1. Cài các extension cần thiết trong VS code
+
+2. Cài angular cli: npm i -g @angular/cli (ng version)
+
+3. Khởi tạo dự án: ng new $TÊN_DỰ_ÁN
+
+4. Chạy dự án: ng serve
+
+5. /src/app/app.components.html: file này viết như html nhưng không bao gồm cấu trúc cơ bản của html.

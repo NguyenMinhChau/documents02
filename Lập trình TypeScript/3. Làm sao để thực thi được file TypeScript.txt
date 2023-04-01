@@ -1,0 +1,17 @@
+1. Cài đặt npm packages: chỉ nên cài ở project đang làm tránh conflict
+# using yarn
+yarn add typescript ts-node ts-lib @types/node
+# using npm
+npm i typescript ts-node ts-lib @types/node
+
+*typescript: chuyển typescript -> js để thực thi
+*ts-node: nó như là nodejs trong TS: chuyển ts -> js rồi thực thi
+*ts-lib và @types/node: các thư viện cần thiết khác
+
+**Khởi tạo file tsconfig.json mặc định: npx tsc --init
+
+2. Check version: npx tsc -v ; npx ts-node -v
+
+3. Combine TS sang JS: npx tsc $NAME_FILE.ts
+
+4. Chạy file TS: npx ts-node $NAME_FILE.ts

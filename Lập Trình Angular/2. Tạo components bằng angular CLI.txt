@@ -1,0 +1,14 @@
+https://angular.io/docs
+
+1. Gõ lệnh: ng g c $TÊN_COMPONENT --skip-tests
+
+2. Sử dụng component bằng cách:
+ + Vào file $Tên_component.componets.ts xem tên selector
+ + Tạo thẻ tag với <$Tên_selector></$Tên_selector> trong app.components.html
+Ví dụ:
+@Component({
+  selector: 'app-header',
+  ...
+}) ==> <app-header></app-header>
+
+3. Nên chia components để đỡ rối

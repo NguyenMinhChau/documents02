@@ -1,0 +1,22 @@
+useEffect(() => {
+  if (currentUser) {
+      dispatch(...)
+  } else {
+      // JS
+      if (!currentUser && !!publicRouter.includes(window.location.pathname)) {
+          history(routers.login);
+      } else {
+          publicRouter.includes(window.location.pathname);
+      }
+      // TS
+      if (!currentUser) {
+        const isPath = publicRouter
+          .map((x) => window.location.pathname.includes(x.path))
+          .filter((x) => x);
+        if (isPath?.length <= 0) {
+          history(routers.login);
+        }
+      } else {
+        publi
+  }
+},[])

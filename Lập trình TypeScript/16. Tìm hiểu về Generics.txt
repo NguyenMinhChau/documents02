@@ -1,0 +1,74 @@
+Generics là gì? Hiểu nôm na nó là kiểu dữ liệu mà có thể nhận tham số và trả về kiểu dữ liệu tương ứng.
+Cú pháp: $X<kiểu dữ liệu | interface> (Array<number>)
+
+Ví dụ:
+interface Student {
+  id: number;
+  name: string;
+}
+
+const numberList: Array<number> = [1,2,3];
+const wordList: Array<string> = ['one', 'two'];
+const studentList: Array<Student> = [
+  {id: 1, name: 'Bob'},
+  ...
+]
+
+1. Tự định nghĩa
+interface List<T> {  // trong đó T có thể thay đổi bằng bất cứ chữ cái nào khác
+  length: number;
+  [index: number]: T; // arr[0], arr[1],...
+  map<U>(callBackFunc: (value: T, index: number, array: T[]) => U): U[];
+  filter(callBackFunc: (value: T, index: number, array: T[]) => boolean): T[];
+}
+
+interface Student {
+  id: number;
+  name: string;
+}
+
+const numberList: List<number> = [1,2,3];
+const wordList: List<string> = ['one', 'two'];
+numberList.map((x, index, array) => {
+  console.log(x);
+});
+
+const studentList: List<Student> = [{id: 1, name: 'Bob'}]
+
+2. keyof operator: Lấy ra tất cả các key
+interface Student {
+  id: number;
+  name: string;
+}
+type StudentKeys = keyof Student; // tập hợp tất cả các key của Student
+const keys: StudentKeys = '$NHẮC_CODE';
+
+3. Mappped Types: Định nghĩa kiểu dữ liệu có props lấy từ kiểu dữ liệu khác
+interface Student {
+  id: number;
+  name: string;
+}
+// trả về toàn boolean
+type MappedTypes = {
+  [Key in keyof Student]: boolean;
+};
+const student: MappedTypes = {
+  id: true,
+  name: false,
+};
+// trả về theo kiểu dữ liệu Student
+type MappedTypes = {
+  [Key in keyof Student]: Student[Key];
+};
+const student: MappedTypes = {
+  id: 1,
+  name: '',
+};
+// tự custom key trả về
+type MappedTypes = {
+  [Key in keyof Student as `get${Capitalize<string & Key>}`]: Student[Key];
+};
+const student: MappedTypes = {
+  getId: 1,
+  getName: '',
+};

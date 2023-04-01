@@ -1,0 +1,14 @@
+const api = axios.create({
+  baseURL: `${process.env.REACT_APP_URL_SERVER}/api/v1`,
+  headers: {...},
+  withCredentials: true,
+})
+// MIDDLEWARES DÙNG ĐỂ CHECK TRƯỚC KHI VÀO API (VD: CHECK TOKEN)
+api.interceptors.response.use((res) => res, (err) => {
+	if(err.response.status === 401){
+	  // todo
+	}
+	return Promise.reject(err)
+})
+
+export {api};

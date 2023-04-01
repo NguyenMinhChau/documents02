@@ -1,0 +1,14 @@
+*HTTP (HyperText Transfer Protocal): giao thức truyền tải siêu văn bản - cách thức website hoạt động trên trình duyệt
+1xx: thông tin
+2xx: thành công
+3xx: không có sự thay đổi/điều hướng lại
+4xx: lỗi phía client
+5xx: lỗi phía server
+
+
+*SSR & CSR (server side rendering & client side rendering)
++ SSR: thường dùng ở các trang chú trọng về SEO (nhận dạng SSR thì view page source code trả về toàn HTML)
+
++ CSR: không chú trọng về SEO (nhận dạng CSR thì view page source code trả về 1 div#root + link script JS)
+
++ Có dự án kết hợp cả 2

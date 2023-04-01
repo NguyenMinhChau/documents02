@@ -1,0 +1,9 @@
+import {api từ interceptors} from '...';
+
+export const setAuthToken = (token) => {
+  if(token){
+	api.defaults.headers.common['$NAME_HEADER_TOKEN'] = token;
+  }else{
+	delete api.defaults.headers.common['$NAME_HEADER_TOKEN'];
+  }
+}

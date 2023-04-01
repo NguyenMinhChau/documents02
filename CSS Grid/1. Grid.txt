@@ -1,0 +1,23 @@
+// Ở ĐÂY CHÚNG TA GIẢ SỬ CHIA 3 CỘT
+
+1. grid-template-columns: 50px 20% auto; => chia kích thước từng cột trong #grid-container
+   chia theo px, %, auto, fr, minmax(min,max)
+
+2. grid-gap: 20px 10px; => Khoảng cách giữ các dòng / cột trong #grid-container
+
+3. grid-row-gap: 20px; => Khoảng cách các dòng 20px trong #grid-container
+
+4. grid-column-gap: 20px; => Khoảng cách các cột 20px trong #grid-container
+
+5. grid-row: x / span y; => x: chỉ thị dòng mà #grid-item đứng, mỗi dòng có chiều cao = chiều cao #grid-item hiện tại
+				    y: chiều cao mà #grid-item chiếm (chiều cao mỗi #grid-item * y)
+
+6. grid-row-start: auto|row-line; => chỉ thị dòng mà #grid-item đứng, mỗi dòng có chiều cao = chiều cao #grid-item hiện tại
+
+7. grid-row-end: auto|row-line|span n; => chiều cao mà #grid-item chiếm (chiều cao mỗi #grid-item * n)
+
+8. grid-area: x / x' / span y / span y';
+	x: chỉ thị dòng mà #grid-item đứng, mỗi dòng có chiều cao = chiều cao #grid-item hiện tại
+	x': chỉ thị cột mà #grid-item đứng, mỗi cột có chiều rộng = chiều rộng #grid-item hiện tại
+	y: chiều cao mà #grid-item chiếm (chiều cao mỗi #grid-item * y)
+	y': chiều rộng mà #grid-item chiếm (chiều rộng mỗi #grid-item * y')

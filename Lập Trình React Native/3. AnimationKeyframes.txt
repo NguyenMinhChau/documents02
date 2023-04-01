@@ -1,0 +1,29 @@
+import {Animated} from 'react-native';
+const [animation] = useState(new Animated.Value(0));
+Animated.timing(animation, {
+    toValue: 1,
+    duration: 1000,
+    useNativeDriver: true,
+  }).start();
+  const animatedStylesOpacity = {
+    opacity: animation.interpolate({
+      inputRange: [0, 0.5, 1],
+      outputRange: [0, 0.5, 1],
+    }),
+    transform: [
+      {
+        scale: animation.interpolate({
+          inputRange: [0, 0.5, 1],
+          outputRange: [0.5, 0.75, 1],
+        }),
+      },
+    ],
+  };
+
+
+// USEAGE
+<Animated.View style={[animatedStylesOpacity]}>
+    <Text style={[styles.text_loader]}>Provident Fund ©{' '}
+       <Text style={[stylesStatus.primary]}>GROUP</Text>
+    </Text>
+</Animated.View>

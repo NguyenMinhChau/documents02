@@ -1,0 +1,9 @@
+1. Explicit types (khai báo tường minh): Khai báo kiểu dữ liệu trong TS sử dụng 2 dấu chấm đằng sau tên biến
+- let a: number = 5;
+= const list: number[] = [1,2,3]
+
+2. Infered types (suy luận được kiểu dữ liệu): TS thông minh detect được kiểu dữ liệu tương ứng ngay cả khi không khai báo kiểu dữ liệu
+
+3. Eraised types: Sau khi compiler TS => JS, tất cả type system sẽ bị xóa hết.
+
+4. Downleveling: comipler từ TS => JS theo đúng target đã được config trong tsconfig.json (nên là phiên bản mới nhất nếu có hỗ trợ)

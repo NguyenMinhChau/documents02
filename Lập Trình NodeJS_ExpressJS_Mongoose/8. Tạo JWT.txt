@@ -1,0 +1,49 @@
+1. npm i jsonwebtoken
+
+2. Tại controller authen
+. Hàm chung tạo REFRESH TOKEN WITH JWT
+createRefreshToken: (user) => {
+    return jwt.sign(
+        { 
+		// Ở đây JWT sẽ tạo refresh token với 2 trường dữ liệu như bên dưới
+            id: user._id,
+            role: user.role,
+        },
+        process.env.JWT_REFRESH_TOKEN_SECRET,
+        {
+            expiresIn: '1d',
+        }
+    );
+},
+. Hàm chung tạo ACCESS TOKEN WITH JWT
+createAccessToken: (user) => {
+    return jwt.sign(
+        {
+		// Ở đây JWT sẽ tạo access token với 2 trường dữ liệu như bên dưới
+            id: user._id,
+            role: user.role,
+        },
+        process.env.JWT_ACCESS_TOKEN_SECRET,
+        {
+            expiresIn: '1d',
+        }
+    );
+},
+. Hàm login
+login: async (req,res) => {
+  ...
+  const access_token = authenController.createAccessToken(user);
+  const refresh_token = authenController.createRefreshToken(user);
+  res.cookie('$KEY_REFRESH_TOKEN', refresh_token, {
+    httpOnly: true,
+    sameSite: 'strict',
+    secure: false,
+    path: '/',
+    maxAge: 7 * 60 * 60 * 1000,
+  });
+  ...
+}
+. Hàm logout
+logout: async (req,res) => {
+  res.clearCookie('$KEY_REFRESH_TOKEN');
+}

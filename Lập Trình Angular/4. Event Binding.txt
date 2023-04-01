@@ -1,0 +1,24 @@
+Cú pháp:
+
+Hay dùng bên HTML: onClick="onClick()"
+
+Bên angular:	 (click)="onClick()"
+
+Bỏ "on" thay bằng cặp ()
+
+Ví dụ: <div class="remove" (click)="removeProduct(product.id)"></div>
+
+Hàm xử lý sẽ được viết bên $Tên_component.component.ts
+export class $Tên_componentComponent {
+  removeProduct(id:string):void{
+    this.products = this.products.filter(product => product.id !== id)
+  }
+}
+
+Ví dụ 2: <input #inputQuantityElement title='quantity' id='1' type="number" class="quantity" step="1"
+          value={{product.quantity}} (input)="updateQuantity(inputQuantityElement)" />
+export class $Tên_componentComponent {
+  updateQuantity(e:any):void{
+    console.log(e.value);
+  }
+}

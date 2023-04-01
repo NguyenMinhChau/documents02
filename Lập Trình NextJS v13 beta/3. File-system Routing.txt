@@ -1,0 +1,35 @@
+https://beta.nextjs.org/docs/upgrade-guide#step-4-migrating-pages
+src/pages Directory	src/app Directory		Route
+index.js			page.js			/
+about.js			about/page.js		/about
+blog/[slug].js		blog/[slug]/page.js	/blog/post-1
+
+VÍ DỤ:
+** SRC/PAGES **
+. src/pages/index.tsx => domain.com/
+. src/pages/about.tsx => domain.com/about
+. src/pages/about/[aboutId]/index.tsx => domain.com/about/:id
+. src/page/about/[aboutId]/slug/[slugId]/index.tsx => domain.com/about/:id/slug/:slug
+. src/page/about/[...aboutId]/index.tsx => Dùng cho PAGE NOT FOUND
+
+** SRC/APP **
+. src/app/page.tsx => domain.com/
+
+. src/app/page/page.tsx => domain.com/page
+  . src/app/page/$COMPONENT_USE_FOR_PAGE.tsx
+  . src/app/page/member/page.tsx => domain.com/page/member
+
+. src/app/about/page.tsx => domain.com/about
+  . src/app/about/$COMPONENT_USE_FOR_ABOUT.tsx
+  . src/app/about/[id]/page.tsx => domain.com/about/:id
+  . src/app/about/[slug]/page.tsx => domain.com/about/:slug
+  . src/app/about/[id]/slug/[slug] => domain.com/:id/slug/[slug]
+  . src/app/about/[...id]/page.tsx => DÙNG CHO PAGE NOT FOUND
+** [id], [slug], [...id] là tên folder **
+
+** USAGE **
+import Link from 'next/link';
+
+<Link href='/about' title=''>About Page</Link>
+<Link href='/about/:id' title=''>Member About</Link>
+<Link href='/about/:slug' title=''>Member About</Link>

@@ -1,0 +1,117 @@
+1. npm init
+
+2. npm i nodemon morgan --save-dev
+
+3. npm i dotenv express mongoose cors mongoose-slug-generator mongoose-delete
++ mongoose-delete: xóa mềm
+
+*SCRIPT: "start": "nodemon --inspect src/index.js",
+
+4. src/index.js
+// use express: parse json
+app.use(express.json());
+// use express for form
+app.use(express.urlencoded({ extended: true }));
+//static file
+app.use(express.static(path.join(__dirname, 'public')));
+// use cors: allow all origin config
+app.use(
+  cors({
+    origin: '*', // or URL_CLIENT
+  })
+);
+// use morgan: log http request in terminal and file
+const accessLogStream = fs.createWriteStream(
+  'src/utils/helpers/logs/access.log',
+  { flags: 'a' }
+);
+app.use(morgan('combined', { stream: accessLogStream })); // log in file
+app.use(morgan('dev')); // log in terminal
+// Tự động xóa log trong khoảng thời gian nào đó: npm install rotating-file-stream
+const rfs = require('rotating-file-stream');
+const logDirectory = path.join(__dirname, 'utils/helpers/logs');
+fs.existsSync(logDirectory) || fs.mkdirSync(logDirectory);
+THAY accessLogStream BÊN TRÊN THÀNH
+const accessLogStream = rfs.createStream('access.log', {
+  interval: '1d', // rotate daily
+  path: logDirectory,
+  maxFiles: 7, // keep 7 days of logs
+  compress: 'gzip', // compress rotated files
+});
+
+5. src/controller/userController.js
+* FIX: Model is not allowed to do action: Database Access -> Edit -> Built-in role -> Read and write to any database -> Save
+const UserController = {
+  // [GET]: /api/v1/users/welcome
+  welcome: async (req, res,next) => {
+    try {
+      res.send(
+        'Welcome to the user controller. This is the welcome message from the user controller.'
+      );
+    } catch (err) {
+      //res.status(500).json({ message: err.message });
+	next(err)
+    }
+  },
+};
+
+module.exports = UserController;
+
+6. src/routers/userRouter.js
+const router = require('express').Router();
+const userController = require('../controllers/userController');
+
+// [GET] /api/v1/users/welcome
+router.get('/welcome', userController.welcome);
+
+module.exports = router;
+
+7. src/routers/index.js
+const routerUser = require('./userRouter');
+
+const router = (app) => {
+  app.use('/api/v1/users', routerUser);
+};
+
+module.exports = router;
+
+8. src/db/connect.js
+require('dotenv').config();
+const mongoose = require('mongoose');
+
+async function connect() {
+  try {
+    await mongoose.connect(process.env.URL_DB, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
+    console.log('Connected to MongoDB Successfully');
+  } catch {
+    console.log('Error in connecting to MongoDB');
+  }
+}
+
+module.exports = {
+  connect,
+};
+
+9. src/models/userModel.js
+const mongoose = require('mongoose');
+const slug = require('mongoose-slug-generator');
+
+mongoose.plugin(slug);
+
+const userSchema = mongoose.Schema(
+  {
+    ...
+    title: { type: String, required: true },
+    description: { type: String },
+    videoId: { type: String, required: true },
+    slug: { type: String, slug: 'title', unique: true },
+  },
+  {
+    timestamps: true,
+  }
+);
+
+module.exports = mongoose.model('User', userSchema);
